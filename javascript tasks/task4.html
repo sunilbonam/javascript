@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        input {
+            margin-bottom: 10px;
+            padding: 8px;
+            width: 200px;
+        }
+        button {
+            margin-right: 10px;
+            padding: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bank Account</h1>
+
+    <div>
+        <h3>Account Information</h3>
+        <p><strong>Account Number:</strong> <span id="accountNumber"></span></p>
+        <p><strong>Account Holder:</strong> <span id="accountHolderName"></span></p>
+        <p><strong>Balance:</strong> $<span id="balance"></span></p>
+    </div>
+
+    <hr>
+
+    <div>
+        <h3>Deposit Amount</h3>
+        <input type="number" id="depositAmount" placeholder="Enter amount to deposit">
+        <button onclick="deposit()">Deposit</button>
+    </div>
+
+    <div>
+        <h3>Withdraw Amount</h3>
+        <input type="number" id="withdrawAmount" placeholder="Enter amount to withdraw">
+        <button onclick="withdraw()">Withdraw</button>
+    </div>
+
+    <div>
+        <h3>Check Balance</h3>
+        <button onclick="checkBalance()">Check Balance</button>
+    </div>
+
+    <script src="bankAccount.js"></script>
+</body>
+</html>
+const bankAccount = {
+    accountNumber: 12345678,
+    accountHolderName: "John Doe",
+    balance: 1000,
+
+    // Method to deposit amount
+    deposit: function (amount) {
+        if (amount > 0) {
+            this.balance += amount;
+            this.updateDisplay();
+            alert(Deposited: $${amount}. New balance: $${this.balance});
+        } else {
+            alert("Please enter a valid deposit amount.");
+        }
+    },
+
+    // Method to withdraw amount
+    withdraw: function (amount) {
+        if (amount > 0 && amount <= this.balance) {
+            this.balance -= amount;
+            this.updateDisplay();
+            alert(Withdrawn: $${amount}. New balance: $${this.balance});
+        } else if (amount > this.balance) {
+            alert("Insufficient balance for this withdrawal.");
+        } else {
+            alert("Please enter a valid withdrawal amount.");
+        }
+    },
+
+    // Method to check balance
+    checkBalance: function () {
+        alert(Current balance is: $${this.balance});
+    },
+
+    // Update the account info on the HTML page
+    updateDisplay: function () {
+        document.getElementById("accountNumber").textContent = this.accountNumber;
+        document.getElementById("accountHolderName").textContent = this.accountHolderName;
+        document.getElementById("balance").textContent = this.balance;
+    }
+};
+
+// Initialize the account details on page load
+bankAccount.updateDisplay();
+
+// Function to handle deposit action
+function deposit() {
+    const amount = parseFloat(document.getElementById("depositAmount").value);
+    bankAccount.deposit(amount);
+    document.getElementById("depositAmount").value = '';  // Clear the input field
+}
+
+// Function to handle withdraw action
+function withdraw() {
+    const amount = parseFloat(document.getElementById("withdrawAmount").value);
+    bankAccount.withdraw(amount);
+    document.getElementById("withdrawAmount").value = '';  // Clear the input field
+}
+
+// Function to check balance
+function checkBalance() {
+    bankAccount.checkBalance();
+}
